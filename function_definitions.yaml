@@ -1,0 +1,349 @@
+getHistoricalCountriesByCurrentCountryAndYear: |
+  {
+    "name": "getHistoricalCountriesByCurrentCountryAndYear",
+    "description": "Get the list of historical countries (kingdoms, empires) that used to exist in the area of the present-day country in the given year. Returns the canonical names of these countries that is guaranteed to work as inputs to other functions.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "currentCountry": {
+          "type": "string",
+          "description": "The name of the present-day country."
+        },
+        "year": {
+          "type": "string",
+          "description": "The year for which to find historical countries, provided as a string. It can represent a year in different formats: a positive integer for AD years, a negative integer for BC years (e.g., '-500' for 500 BC), or a string with the format 'YYYY BC' for BC years (e.g., '100 BC'). The function interprets negative integers or the 'YYYY BC' format as years in BC and positive integers or standard date strings as years in AD. It will be converted to a decades-based year (e.g., '1900s' for the year 1900)."
+        }
+      },
+      "required": ["currentCountry", "year"]
+    }
+  }
+getHistoricalEvents: |
+  {
+    "name": "getHistoricalEvents",
+    "description": "Finds a list of historical events and builds a graph of these events with the countries involved pointing at the events. Then returns the list of communities in this graph where each community is a list of vertices.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "year": {
+          "type": "string",
+          "description": "The year for which to find historical events, provided as a string. It can represent a year in different formats: a positive integer for AD years, a negative integer for BC years (e.g., '-500' for 500 BC), or a string with the format 'YYYY BC' for BC years (e.g., '100 BC'). The function interprets negative integers or the 'YYYY BC' format as years in BC and positive integers or standard date strings as years in AD."
+        },
+        "yearBack": {
+          "type": "integer",
+          "description": "When including historical events that happened close to the given year, how many years should we look back.",
+          "default": 1
+        }
+      },
+      "required": ["year"]
+    }
+  }
+getMilitaryConflicts: |
+  {
+    "name": "getMilitaryConflicts",
+    "description": "Finds a list of wars and revolutions and builds a graph of these conflicts with the main actors involved pointing at the conflict. Then returns the list of communities in this graph.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "year": {
+          "type": "string",
+          "description": "The year for which to find military conflicts, provided as a string. It can represent a year in different formats: a positive integer for AD years, a negative integer for BC years (e.g., '-500' for 500 BC), or a string with the format 'YYYY BC' for BC years (e.g., '100 BC'). The function interprets negative integers or the 'YYYY BC' format as years in BC and positive integers or standard date strings as years in AD."
+        },
+        "yearBack": {
+          "type": "integer",
+          "description": "When including military conflicts that happened close to the given year, how many years should we look back.",
+          "default": 1
+        }
+      },
+      "required": ["year"]
+    }
+  }
+timelineHistoricalPeriodsAndNotablePeople: |
+  {
+    "name": "timelineHistoricalPeriodsAndNotablePeople",
+    "description": "Get a list of historical periods or eras for the given year and a list of notable people alive at the time. It also returns an image of a timeline showing these periods.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "year": {
+          "type": "string",
+          "description": "The year for which to get the timeline, provided as a string. It can represent a year in different formats: a positive integer for AD years, a negative integer for BC years (e.g., '-500' for 500 BC), or a string with the format 'YYYY BC' for BC years (e.g., '100 BC'). The function interprets negative integers or the 'YYYY BC' format as years in BC and positive integers or standard date strings as years in AD."
+        }
+      },
+      "required": ["year"]
+    }
+  }
+getWarsByHistoricalCountryAndYear: |
+  {
+    "name": "getWarsByHistoricalCountryAndYear",
+    "description": "Get the list of wars with their proper, recognizable names by the main actor historical country and the given year.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "historicalCountry": {
+          "type": "string",
+          "description": "The name of the historical country."
+        },
+        "year": {
+          "type": "string",
+          "description": "The year for which to find wars, provided as a string. It can represent a year in different formats: a positive integer for AD years, a negative integer for BC years (e.g., '-500' for 500 BC), or a string with the format 'YYYY BC' for BC years (e.g., '100 BC'). The function interprets negative integers or the 'YYYY BC' format as years in BC and positive integers or standard date strings as years in AD."
+        }
+      },
+      "required": ["historicalCountry", "year"]
+    }
+  }
+mapHistoricalContinent: |
+  {
+    "name": "mapHistoricalContinent",
+    "description": "Display a historical map of a continent in the given year.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "year": {
+          "type": "string",
+          "description": "The year for which to display the map, provided as a string. It can represent a year in different formats: a positive integer for AD years, a negative integer for BC years (e.g., '-500' for 500 BC), or a string with the format 'YYYY BC' for BC years (e.g., '100 BC'). The function interprets negative integers or the 'YYYY BC' format as years in BC and positive integers or standard date strings as years in AD."
+        },
+        "continent": {
+          "type": "string",
+          "description": "The name of the continent.",
+          "enum": ["Europe", "Asia", "Africa", "NorthAmerica", "SouthAmerica", "Australia"]
+        }
+      },
+      "required": ["year", "continent"]
+    }
+  }
+mapHistoricalCountry: |
+  {
+    "name": "mapHistoricalCountry",
+    "description": "Display a map of a historical country (e.g., kingdom, empire) in the given year.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "historicalCountry": {
+          "type": "string",
+          "description": "The name of the historical country."
+        },
+        "year": {
+          "type": "string",
+          "description": "The year for which to display the map, provided as a string. It can represent a year in different formats: a positive integer for AD years, a negative integer for BC years (e.g., '-500' for 500 BC), or a string with the format 'YYYY BC' for BC years (e.g., '100 BC'). The function interprets negative integers or the 'YYYY BC' format as years in BC and positive integers or standard date strings as years in AD."
+        },
+        "geoRange": {
+          "type": "string",
+          "description": "The geographical range for the map. Defaults to 'Automatic'.",
+          "enum": ["Automatic", "Continent", "World"],
+          "default": "Continent"
+        }
+      },
+      "required": ["historicalCountry", "year"]
+    }
+  }
+imageSearch: |
+  {
+    "name": "imageSearch",
+    "description": "Search for images on Google using the given query. Creates an image collages of up to 4 images",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "searchString": {
+          "type": "string",
+          "description": "The search string for the images."
+        }
+      },
+      "required": ["searchString"]
+    }
+  }
+timelinePerson: |
+  {
+    "name": "timelinePerson",
+    "description": "Display a timeline of events for a historical person and return curated factual data.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "person": {
+          "type": "string",
+          "description": "The name of the historical person."
+        }
+      },
+      "required": ["person"]
+    }
+  }
+mapWar: |
+  {
+    "name": "mapWar",
+    "description": "Show a map of a military conflict (e.g., a battle or a war). It also returns curated data about each battle.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "militaryConflict": {
+          "type": "string",
+          "description": "The name of the military conflict. "
+        },
+        "geoRange": {
+          "type": "string",
+          "description": "The geographical range for the map. Defaults to 'Actors'.",
+          "enum": ["Battles", "Actors", "World"],
+          "default": "Actors"
+        }
+      },
+      "required": ["militaryConflict"]
+    }
+  }
+generate_image: |
+  {
+    "name": "generate_image",
+    "description": "Generate an image using DALL-E 3.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "description": "The prompt for the image."
+        }
+      },
+      "required": ["prompt"]
+    }
+  }
+timelineCombined: |
+  {
+    "name": "timelineCombined",
+    "description": "Display a combined timeline of historical periods, historical countries, military conflicts, and historical people.  Less is more! Use the minimum input arguments to give the user what they asked for and no more than that.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "periods": {
+          "type": "string",
+          "description": "semicolon (;) separated list of historical periods. Periods should be referred to by their name, e.g., 'Space Age'.",
+          "enum": [
+             "Afsharid Dynasty", "Age of Enlightenment", "Age of Exploration", "Golden age of Perikles", "Alavid Dynasty", 
+             "Ancient Greek Period", "Ancient Mesopotamian Period", "Archaic Greek Period", "Asuka period", "Atomic Age", 
+             "Azuchi-Momoyama period", "Baroque era", "Aegean Bronze Age", "Asian Bronze Age", "European Bronze Age", 
+             "Near Eastern Bronze Age", "Buyid Dynasty", "Byzantine Greek Period", "Chalcolithic", "Chen Dynasty", 
+             "Classical Greek Period", "Cold War era", "Early Horizon period", "Early Intermediate period", 
+             "Early Middle Ages", "Early Modern Europe", "Eastern Han Dynasty", "Eastern Wei Dynasty", 
+             "Spring and Autumn Period", "Warring States Period", "Edo period", "Edwardian era", "Elizabethan era", 
+             "European Migration period", "European Renaissance", "Georgian era", "Ghaznavid Dynasty", "Gilded Age", "Goryeo", 
+             "Great Depression", "Green Revolution", "Harappan period", "Heian period", "Heisei period", 
+             "Hellenistic Greek Period", "High Middle ages", "Napoleon's Hundred Days", "Indian Vedic period", 
+             "Industrial Revolution", "Information Age", "Initial period", "Internet Age", "Interwar period", "Iron Age", 
+             "Islamic Golden Age", "Jacobean era", "Eastern Jin Dynasty", "Sixteen Kingdoms", "Jōmon period", 
+             "Joseon Dynasty", "July Monarchy", "Jurchen Jin Dynasty", "Kamakura period", "Khwarezmian Dynasty", 
+             "Kofun period", "Kóka period", "Late Horizon period", "Late Intermediate period", "Late Middle ages", 
+             "Later Han Dynasty", "Later Jin Dynasty", "Later Liang Dynasty", "Later Tang Dynasty", "Later Zhou Dynasty", 
+             "Liang Dynasty", "Liao Dynasty", "Liu Song Dynasty", "Lower Paleolithic", "Machine Age", "Meiji period", 
+             "Mesoamerican Classic era", "Mesoamerican Paleo-Indian", "Mesoamerican Postclassic era", 
+             "Mesoamerican Pre-Classic period", "Mesolithic", "Middle Horizon period", "Middle Kingdom", 
+             "Middle Paleolithic", "Ming Dynasty", "Modern Greek Period", "Muromachi period", "Napoleonic era", "Nara period", 
+             "Neoclassical period", "Neolithic Period", "New Kingdom", "Northern Wei Dynasty", "Northern Qi Dynasty", 
+             "Northern Zhou Dynasty", "Old Kingdom", "Ottoman Greek Period", "Paleolithic", "Pax Romana", 
+             "Protestant Reformation", "Qajar Dynasty", "Qin Dynasty", "Qing Dynasty", "Civil War Reconstruction", 
+             "Regency England", "Reiwa Period", "Rococo era", "Roman Greek Period", "Romantic era", "Safavid Dynasty", 
+             "Saffarid Dynasty", "Samanid Dynasty", "Scientific Revolution", "Second Industrial Revolution", "Shang Dynasty", 
+             "Shōwa period", "Northern Song Dynasty", "Southern Song Dynasty", "Southern and Northern Dynasties", 
+             "Southern Qi Dynasty", "Space Age", "Stone Age", "Sui Dynasty", "Tahirid Dynasty", "Taishō period", 
+             "Tang Dynasty", "Kingdom of Shu", "Kingdom of Wei", "Kingdom of Wu", "Three Sovereigns and the Five Emperors", 
+             "Timurid Dynasty", "Upper Paleolithic", "Victorian era", "Viking Age", "Western Han Dynasty", 
+             "Western Jin Dynasty", "Western Wei Dynasty", "Western Xia Dynasty", "Xia Dynasty", "Xin Dynasty", "Yayoi period", 
+             "Yuan Dynasty", "Zand Dynasty", "Western Zhou Dynasty", "Ziyarid Dynasty"]
+        },
+        "historicalCountries": {
+          "type": "string",
+          "description": "semicolon (;) separated list of historical countries."
+        },
+        "militaryConflicts": {
+          "type": "string",
+          "description": "semicolon (;) separated list of military conflicts"
+        },
+        "persons" : {
+          "type": "string",
+          "description": "semicolon (;) separated list of historical people"
+        }
+      },
+      "required": []
+    }
+  }
+mapCombined: |
+  {
+    "name": "mapCombined",
+    "description": "Display a combined map of historical countries, military conflicts, current countries and cities, and historical periods. Less is more! Use the minimum input arguments to give the user what they asked for and no more than that. It generates an image that overlays the various geographical entities. All historical countries are shown in the same color and lebeled. All current countries and cities are shown in another color and labeled. Cities show as dots or areas depending on the scale. Historical periods each have their unique color. Battles are shown with marker pins. The colors are explained in a legend. An attempt is made to show all historical boundaries at the same historical time, in the year given; this is not guaranteed and depends on the availability of map data.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "historicalCountries": {
+          "type": "string",
+          "description": "semicolon (;) separated list of historical countries."
+        },
+        "yearForHistoricalCountries": {
+          "type": "string",
+          "description": "The year for which to display the the borders of all historical countries listed, provided as a string. It can represent a year in different formats: a positive integer for AD years, a negative integer for BC years (e.g., '-500' for 500 BC), or a string with the format 'YYYY BC' for BC years (e.g., '100 BC'). The function interprets negative integers or the 'YYYY BC' format as years in BC and positive integers or standard date strings as years in AD. Required if historical coutries are listed."  
+        },
+        "militaryConflicts": {
+          "type": "string",
+          "description": "semicolon (;) separated list of military conflicts"
+        },
+        "countries": {
+          "type": "string",
+          "description": "semicolon (;) separated list of current countries."
+        },
+        "cities": {
+          "type": "string",
+          "description": "semicolon (;) separated list of cities."
+        },
+        "periods": {
+          "type": "string",
+          "description": "semicolon (;) separated list of historical periods. Periods should be referred to by their name, e.g., 'Space Age'.",
+          "enum": [
+             "Afsharid Dynasty", "Age of Enlightenment", "Age of Exploration", "Golden age of Perikles", "Alavid Dynasty", 
+             "Ancient Greek Period", "Ancient Mesopotamian Period", "Archaic Greek Period", "Asuka period", "Atomic Age", 
+             "Azuchi-Momoyama period", "Baroque era", "Aegean Bronze Age", "Asian Bronze Age", "European Bronze Age", 
+             "Near Eastern Bronze Age", "Buyid Dynasty", "Byzantine Greek Period", "Chalcolithic", "Chen Dynasty", 
+             "Classical Greek Period", "Cold War era", "Early Horizon period", "Early Intermediate period", 
+             "Early Middle Ages", "Early Modern Europe", "Eastern Han Dynasty", "Eastern Wei Dynasty", 
+             "Spring and Autumn Period", "Warring States Period", "Edo period", "Edwardian era", "Elizabethan era", 
+             "European Migration period", "European Renaissance", "Georgian era", "Ghaznavid Dynasty", "Gilded Age", "Goryeo", 
+             "Great Depression", "Green Revolution", "Harappan period", "Heian period", "Heisei period", 
+             "Hellenistic Greek Period", "High Middle ages", "Napoleon's Hundred Days", "Indian Vedic period", 
+             "Industrial Revolution", "Information Age", "Initial period", "Internet Age", "Interwar period", "Iron Age", 
+             "Islamic Golden Age", "Jacobean era", "Eastern Jin Dynasty", "Sixteen Kingdoms", "Jōmon period", 
+             "Joseon Dynasty", "July Monarchy", "Jurchen Jin Dynasty", "Kamakura period", "Khwarezmian Dynasty", 
+             "Kofun period", "Kóka period", "Late Horizon period", "Late Intermediate period", "Late Middle ages", 
+             "Later Han Dynasty", "Later Jin Dynasty", "Later Liang Dynasty", "Later Tang Dynasty", "Later Zhou Dynasty", 
+             "Liang Dynasty", "Liao Dynasty", "Liu Song Dynasty", "Lower Paleolithic", "Machine Age", "Meiji period", 
+             "Mesoamerican Classic era", "Mesoamerican Paleo-Indian", "Mesoamerican Postclassic era", 
+             "Mesoamerican Pre-Classic period", "Mesolithic", "Middle Horizon period", "Middle Kingdom", 
+             "Middle Paleolithic", "Ming Dynasty", "Modern Greek Period", "Muromachi period", "Napoleonic era", "Nara period", 
+             "Neoclassical period", "Neolithic Period", "New Kingdom", "Northern Wei Dynasty", "Northern Qi Dynasty", 
+             "Northern Zhou Dynasty", "Old Kingdom", "Ottoman Greek Period", "Paleolithic", "Pax Romana", 
+             "Protestant Reformation", "Qajar Dynasty", "Qin Dynasty", "Qing Dynasty", "Civil War Reconstruction", 
+             "Regency England", "Reiwa Period", "Rococo era", "Roman Greek Period", "Romantic era", "Safavid Dynasty", 
+             "Saffarid Dynasty", "Samanid Dynasty", "Scientific Revolution", "Second Industrial Revolution", "Shang Dynasty", 
+             "Shōwa period", "Northern Song Dynasty", "Southern Song Dynasty", "Southern and Northern Dynasties", 
+             "Southern Qi Dynasty", "Space Age", "Stone Age", "Sui Dynasty", "Tahirid Dynasty", "Taishō period", 
+             "Tang Dynasty", "Kingdom of Shu", "Kingdom of Wei", "Kingdom of Wu", "Three Sovereigns and the Five Emperors", 
+             "Timurid Dynasty", "Upper Paleolithic", "Victorian era", "Viking Age", "Western Han Dynasty", 
+             "Western Jin Dynasty", "Western Wei Dynasty", "Western Xia Dynasty", "Xia Dynasty", "Xin Dynasty", "Yayoi period", 
+             "Yuan Dynasty", "Zand Dynasty", "Western Zhou Dynasty", "Ziyarid Dynasty"]
+        }
+      },
+      "required": []
+    }
+  }
+web_search_brave: |
+  {
+    "name": "web_search_brave",
+    "description": "Search the Web using Brave Search API.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "q": {
+          "type": "string",
+          "description": "The search query. Maximum of 400 characters and 50 words in the query. You can also optimize your search query by using  search operators. -: Returns web pages not containing the specified term neither in the title nor the body of the page. Example: to search web pages containing the keyword 'office' while avoiding results with the term 'Microsoft', type 'office -microsoft'. \"\": Returns web pages containing only exact matches to your query. Example: to find web pages about Harry Potter only containing the keywords 'order of the phoenix' in that exact order, type 'harry potter \"order of the phoenix\"'. You can use logical operators AND, OR and NOT in combination with search operators."
+        },
+        "freshness": {
+          "type": "string",
+          "description": "The freshness of the search results. Can be 'pd' (past day), 'pw' (past week), 'pm' (past month), 'py' (past year), 'YYYY-MM-DDtoYYYY-MM-DD' (custom date range)."
+        }
+      },
+      "required": [
+        "q"
+      ]
+    }
+  }

@@ -1,0 +1,135 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='WolframDesktop 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       161,          7]
+NotebookDataLength[      4595,        125]
+NotebookOptionsPosition[      3798,        104]
+NotebookOutlinePosition[      4242,        121]
+CellTagsIndexPosition[      4199,        118]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ccCost", " ", "=", " ", 
+   RowBox[{
+    TemplateBox[{
+      InterpretationBox[
+       TagBox[
+        InterpretationBox[
+         StyleBox["\"180.00\"", ShowStringCharacters -> False], 180., 
+         AutoDelete -> True], 
+        NumberForm[#, {Infinity, 2}, DigitBlock -> 3, NumberSeparator -> 
+         "\[ThinSpace]"]& ], 180., Selectable -> False], 
+      RowBox[{
+        FormBox["\"$\"", TraditionalForm], "\[VeryThinSpace]"}], "US dollars",
+       "\"USDollars\""},
+     "QuantityPrefix"], "/", 
+    TemplateBox[{"1.*^6", 
+      RowBox[{
+        FrameBox[
+         StyleBox[
+         "\"units\"", ShowStringCharacters -> False, StripOnInput -> False], 
+         FrameMargins -> 1, FrameStyle -> GrayLevel[0.85], BaselinePosition -> 
+         Baseline, RoundingRadius -> 3, StripOnInput -> False]}], "units", 
+      RowBox[{"IndependentUnit", "[", "\"units\"", "]"}]},
+     "Quantity"]}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.930081535786684*^9, 3.930081541019289*^9}, 
+   3.9300816585467625`*^9},
+ CellLabel->"In[43]:=",ExpressionUUID->"f3bf7da6-9986-1b47-9efb-967aea2cd331"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ccPerCompute", " ", "=", " ", 
+   RowBox[{
+    TemplateBox[{"1", 
+      RowBox[{
+        FrameBox[
+         StyleBox[
+         "\"units\"", ShowStringCharacters -> False, StripOnInput -> False], 
+         FrameMargins -> 1, FrameStyle -> GrayLevel[0.85], BaselinePosition -> 
+         Baseline, RoundingRadius -> 3, StripOnInput -> False]}], "units", 
+      RowBox[{"IndependentUnit", "[", "\"units\"", "]"}]},
+     "Quantity"], "/", 
+    TemplateBox[{"100", "\"ms\"", "milliseconds", "\"Milliseconds\""},
+     "Quantity"]}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.9300815547101727`*^9, 3.9300815821628017`*^9}, 
+   3.930081661938919*^9, {3.93008172825029*^9, 3.9300817291871204`*^9}},
+ CellLabel->"In[47]:=",ExpressionUUID->"6147e95e-97b0-0f42-9915-c58805b11694"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"computePerCall", " ", "=", " ", 
+   TemplateBox[{"28", "\"s\"", "seconds", "\"Seconds\""},
+    "Quantity"]}], ";"}]], "Input",
+ CellChangeTimes->{{3.930081600542719*^9, 3.9300816167692547`*^9}, 
+   3.9300816647857914`*^9},
+ CellLabel->"In[45]:=",ExpressionUUID->"37867ddf-37c5-814d-aa24-422084ab1ec1"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"costPerCall", " ", "=", " ", 
+  RowBox[{
+  "computePerCall", " ", "*", " ", "ccPerCompute", " ", "*", " ", 
+   "ccCost"}]}]], "Input",
+ CellChangeTimes->{{3.9300816249421234`*^9, 3.9300816748908615`*^9}},
+ CellLabel->"In[48]:=",ExpressionUUID->"6eee7442-2974-e54f-b563-043198c7f2d9"],
+
+Cell[BoxData[
+ TemplateBox[{
+   InterpretationBox[
+    TagBox[
+     InterpretationBox[
+      StyleBox["\"0.05\"", ShowStringCharacters -> False], 
+      0.05039999999999999, AutoDelete -> True], 
+     NumberForm[#, {Infinity, 2}, DigitBlock -> 3, NumberSeparator -> 
+      "\[ThinSpace]"]& ], 0.05039999999999999, Selectable -> False], 
+   RowBox[{
+     FormBox["\"$\"", TraditionalForm], "\[VeryThinSpace]"}], "US dollars", 
+   "\"USDollars\""},
+  "QuantityPrefix"]], "Output",
+ CellChangeTimes->{3.93008167551754*^9, 3.930081743296137*^9},
+ CellLabel->"Out[48]=",ExpressionUUID->"1af0ca68-fa60-9c4a-b766-904dbc4417ab"]
+}, Open  ]]
+},
+WindowSize->{1909, 1018},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+TaggingRules-><|"TryRealOnly" -> False|>,
+FrontEndVersion->"14.0 for Microsoft Windows (64-bit) (December 16, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"6e9c4710-3b88-744a-978b-b22cc3a6baeb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[561, 20, 1123, 27, 53, "Input",ExpressionUUID->"f3bf7da6-9986-1b47-9efb-967aea2cd331"],
+Cell[1687, 49, 801, 17, 53, "Input",ExpressionUUID->"6147e95e-97b0-0f42-9915-c58805b11694"],
+Cell[2491, 68, 336, 7, 39, "Input",ExpressionUUID->"37867ddf-37c5-814d-aa24-422084ab1ec1"],
+Cell[CellGroupData[{
+Cell[2852, 79, 307, 6, 35, "Input",ExpressionUUID->"6eee7442-2974-e54f-b563-043198c7f2d9"],
+Cell[3162, 87, 620, 14, 46, "Output",ExpressionUUID->"1af0ca68-fa60-9c4a-b766-904dbc4417ab"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

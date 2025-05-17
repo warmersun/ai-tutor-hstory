@@ -1,0 +1,584 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='WolframDesktop 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       161,          7]
+NotebookDataLength[     25774,        576]
+NotebookOptionsPosition[     25055,        555]
+NotebookOutlinePosition[     25463,        571]
+CellTagsIndexPosition[     25420,        568]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"combinedTimeline", " ", "=", " ", 
+  RowBox[{"APIFunction", "[", 
+   RowBox[{
+    RowBox[{"{", "\n", 
+     RowBox[{
+      RowBox[{"\"\<periods\>\"", " ", "->", " ", 
+       RowBox[{
+        RowBox[{"DelimitedSequence", "[", 
+         RowBox[{"\"\<String\>\"", ",", "\"\<;\>\""}], "]"}], "->", 
+        RowBox[{"{", "}"}]}]}], ",", "\n", 
+      RowBox[{"\"\<historicalCountries\>\"", " ", "->", " ", 
+       RowBox[{
+        RowBox[{"DelimitedSequence", "[", 
+         RowBox[{"\"\<String\>\"", ",", " ", "\"\<;\>\""}], "]"}], "->", 
+        RowBox[{"{", "}"}]}]}], ",", "\n", 
+      RowBox[{"\"\<militaryConflicts\>\"", "->", 
+       RowBox[{
+        RowBox[{"DelimitedSequence", "[", 
+         RowBox[{"\"\<String\>\"", ",", "\"\<;\>\""}], "]"}], "->", 
+        RowBox[{"{", "}"}]}]}], ",", "\n", 
+      RowBox[{"\"\<persons\>\"", "->", 
+       RowBox[{
+        RowBox[{"DelimitedSequence", "[", 
+         RowBox[{"\"\<String\>\"", ",", " ", "\"\<;\>\""}], "]"}], "->", 
+        RowBox[{"{", "}"}]}]}]}], "}"}], ",", "\n", 
+    RowBox[{
+     RowBox[{"TimeConstrained", "[", "\n", 
+      RowBox[{
+       RowBox[{"Module", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+          "periods", ",", " ", "incorrectPeriods", ",", " ", 
+           "periodsForTimeline", ",", "\[IndentingNewLine]", 
+           "historicalCountries", ",", " ", "incorrectHistoricalCountries", 
+           ",", " ", "historicalCountriesForTimeline", ",", " ", 
+           "\[IndentingNewLine]", "militaryConflicts", ",", " ", 
+           "incorrectMilitaryConflicts", ",", " ", 
+           "militaryConflictsForTimeline", ",", "\[IndentingNewLine]", 
+           "persons", ",", " ", "incorrectPersons", ",", " ", 
+           "personsForTimeline", ",", " ", "\[IndentingNewLine]", 
+           "imageURL"}], "}"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"(*", " ", "periods", " ", "*)"}], "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"periods", " ", "=", " ", 
+           RowBox[{"AssociationMap", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"Interpreter", "[", "\"\<HistoricalPeriod\>\"", "]"}], 
+               "[", "#", "]"}], "&"}], ",", "#periods"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"incorrectPeriods", " ", "=", " ", 
+           RowBox[{
+            RowBox[{"Select", "[", 
+             RowBox[{"periods", ",", " ", "FailureQ"}], "]"}], " ", "//", 
+            "Keys"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"periodsForTimeline", " ", "=", " ", 
+           RowBox[{"Select", "[", 
+            RowBox[{"periods", ",", " ", 
+             RowBox[{
+              RowBox[{"Not", "[", 
+               RowBox[{"FailureQ", "[", "#", "]"}], "]"}], "&"}]}], "]"}]}], 
+          ";", "\[IndentingNewLine]", 
+          RowBox[{"(*", " ", 
+           RowBox[{"historical", " ", "countries"}], " ", "*)"}], 
+          "\[IndentingNewLine]", 
+          RowBox[{"historicalCountries", " ", "=", " ", 
+           RowBox[{"AssociationMap", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"toEntityHistoricalCountryString", "[", "#", "]"}], 
+              "&"}], ",", " ", "#historicalCountries"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"incorrectHistoricalCountries", " ", "=", " ", 
+           RowBox[{
+            RowBox[{"Select", "[", 
+             RowBox[{"historicalCountries", ",", " ", 
+              RowBox[{
+               RowBox[{"MissingQ", "[", 
+                RowBox[{"EntityValue", "[", 
+                 RowBox[{"#", ",", "\"\<Name\>\""}], "]"}], "]"}], "&"}]}], 
+             "]"}], " ", "//", " ", "Keys"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"historicalCountriesForTimeline", " ", "=", " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Labeled", "[", 
+              RowBox[{
+               RowBox[{"DateInterval", "[", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"EntityValue", "[", 
+                   RowBox[{"#", ",", "\"\<StartDate\>\""}], "]"}], ",", 
+                  RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{"MissingQ", "[", 
+                    RowBox[{"EntityValue", "[", 
+                    RowBox[{"#", ",", "\"\<EndDate\>\""}], "]"}], "]"}], ",", 
+                    "Now", ",", " ", 
+                    RowBox[{"EntityValue", "[", 
+                    RowBox[{"#", ",", "\"\<EndDate\>\""}], "]"}]}], "]"}]}], 
+                 "}"}], "]"}], ",", 
+               RowBox[{"EntityValue", "[", 
+                RowBox[{"#", ",", "\"\<Name\>\""}], "]"}]}], "]"}], "&"}], 
+            " ", "/@", " ", "\[IndentingNewLine]", 
+            RowBox[{"Select", "[", 
+             RowBox[{"historicalCountries", ",", " ", 
+              RowBox[{
+               RowBox[{"Not", "[", 
+                RowBox[{"MissingQ", "[", 
+                 RowBox[{"EntityValue", "[", 
+                  RowBox[{"#", ",", "\"\<Name\>\""}], "]"}], "]"}], "]"}], 
+               "&"}]}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"(*", " ", "militaryConfllicts", " ", "*)"}], 
+          "\[IndentingNewLine]", 
+          RowBox[{"militaryConflicts", " ", "=", " ", 
+           RowBox[{"AssociationMap", "[", 
+            RowBox[{
+            "toEntityMilitaryConflictString", ",", " ", 
+             "#militaryConflicts"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"incorrectMilitaryConflicts", " ", "=", " ", 
+           RowBox[{
+            RowBox[{"Select", "[", 
+             RowBox[{"militaryConflicts", ",", " ", "MissingQ"}], "]"}], " ", 
+            "//", " ", "Keys"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"militaryConflictsForTimeline", " ", "=", " ", 
+           RowBox[{"DeleteMissing", "[", "militaryConflicts", "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"(*", " ", "persons", " ", "*)"}], "\[IndentingNewLine]", 
+          RowBox[{"persons", " ", "=", " ", 
+           RowBox[{"AssociationMap", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"Interpreter", "[", "\"\<Person\>\"", "]"}], "[", "#", 
+               "]"}], "&"}], ",", "#persons"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"incorrectPersons", " ", "=", " ", 
+           RowBox[{
+            RowBox[{"Select", "[", 
+             RowBox[{"persons", ",", " ", "FailureQ"}], "]"}], " ", "//", " ",
+             "Keys"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"personsForTimeline", " ", "=", " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Labeled", "[", 
+              RowBox[{
+               RowBox[{"DateInterval", "[", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"EntityValue", "[", 
+                   RowBox[{"#", ",", "\"\<BirthDate\>\""}], "]"}], ",", 
+                  RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{"MissingQ", "[", 
+                    RowBox[{"EntityValue", "[", 
+                    RowBox[{"#", ",", "\"\<DeathDate\>\""}], "]"}], "]"}], 
+                    ",", "Now", ",", " ", 
+                    RowBox[{"EntityValue", "[", 
+                    RowBox[{"#", ",", "\"\<DeathDate\>\""}], "]"}]}], "]"}]}],
+                  "}"}], "]"}], ",", 
+               RowBox[{"EntityValue", "[", 
+                RowBox[{"#", ",", "\"\<Name\>\""}], "]"}]}], "]"}], "&"}], "/@", 
+            RowBox[{"Select", "[", 
+             RowBox[{"persons", ",", " ", 
+              RowBox[{
+               RowBox[{"Not", "[", 
+                RowBox[{"FailureQ", "[", "#", "]"}], "]"}], "&"}]}], 
+             "]"}]}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"(*", " ", "timelinePlot", " ", "*)"}], 
+          "\[IndentingNewLine]", 
+          RowBox[{"imageURL", " ", "=", " ", 
+           RowBox[{
+            RowBox[{"CloudExport", "[", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"Rasterize", "[", "\[IndentingNewLine]", 
+               RowBox[{
+                RowBox[{"TimelinePlot", "[", 
+                 RowBox[{
+                  RowBox[{"{", 
+                   RowBox[{
+                   "periods", ",", "historicalCountriesForTimeline", ",", 
+                    "militaryConflicts", ",", "personsForTimeline"}], "}"}], 
+                  ",", 
+                  RowBox[{"PlotTheme", "->", "\"\<Web\>\""}], ",", 
+                  RowBox[{"PlotLayout", "->", "\"\<Stacked\>\""}], ",", " ", 
+                  RowBox[{"Filling", "->", " ", "Axis"}], ",", " ", 
+                  "\[IndentingNewLine]", 
+                  RowBox[{"PlotLegends", "->", 
+                   RowBox[{"{", 
+                    RowBox[{
+                    "\"\<Periods\>\"", ",", "\"\<Historical Countries\>\"", 
+                    ",", " ", "\"\<Military Conflicts\>\"", ",", " ", 
+                    "\"\<Persons\>\""}], "}"}]}], ",", " ", 
+                  RowBox[{"ImageSize", "->", "Large"}]}], "]"}], ",", " ", 
+                "\[IndentingNewLine]", 
+                RowBox[{"ImageResolution", "->", "300"}]}], "]"}], ",", " ", 
+              "\[IndentingNewLine]", "\"\<PNG\>\"", ",", " ", 
+              RowBox[{"Permissions", "->", "\"\<Public\>\""}]}], "]"}], "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"ExportString", "[", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"<|", 
+             RowBox[{
+              RowBox[{"\"\<image\>\"", "->", "imageURL"}], ",", " ", 
+              "\[IndentingNewLine]", 
+              RowBox[{"\"\<notesForAssistant\>\"", "->", " ", 
+               RowBox[{"<|", " ", 
+                RowBox[{
+                 RowBox[{
+                 "\"\<incorrectPeriods\>\"", "->", "incorrectPeriods"}], ",", 
+                 " ", 
+                 RowBox[{
+                 "\"\<incorrectHistoricalCountries\>\"", "->", " ", 
+                  "incorrectHistoricalCountries"}], ",", " ", 
+                 RowBox[{
+                 "\"\<incorrectMilitaryConflicts\>\"", "->", 
+                  "incorrectMilitaryConflicts"}], ",", " ", 
+                 RowBox[{
+                 "\"\<incorrectPersons\>\"", "->", "incorrectPersons"}]}], 
+                "|>"}]}]}], "|>"}], ",", "\"\<RawJSON\>\""}], "]"}]}]}], 
+        "\[IndentingNewLine]", "]"}], ",", "28", ",", 
+       RowBox[{"Failure", "[", 
+        RowBox[{"\"\<TimeConstrained\>\"", ",", 
+         RowBox[{"<|", 
+          RowBox[{
+          "\"\<MessageTemplate\>\"", "->", "\"\<Request timed out\>\""}], 
+          "|>"}]}], "]"}]}], "]"}], "&"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<String\>\"", ",", " ", "\"\<JSON\>\"", ",", " ", "\"\<JSON\>\""}], 
+     "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->CompressedData["
+1:eJwdzE0ogwEcBvCX5nvKpOwwX5FWJpodxoGpJQpJSr7CZtlKUVuK9pF6l/ey
+tew9kHGZYbIwobGxi1Ga5KBkygVTW+0wzWoH7/Me/v3qeXr+NYr5QVU2QRAV
+zEFu66Q2pyfeKbqQ6GFyOGSH8nWRF+6IDT5YfZ3lhzKPNsjmZ6W3rFN7D5C+
+6AizuyUqBsniNCeXMUPFNyHH7NyGknyPG8pTX6zSj4wHJqKVfqjbuArC6nHe
+PRwStj/DGSr8AslGTYT9O3ryDoX85R+o/v5MQeLogMhjHKjv4sCnULgIjvOb
+yyBfXFgFd9wC1mTMWws/jJYGtneFW2Ci3NYP66zkGDzmjUxAyaldCbudTSq4
+P71rgrZD9QqkXEYLlJr+1uDc46sDRq3kFixpW/RB2flbAApld4oCxt4IrYS0
+Wa+GNjpXA48Dvw5IcVe3IdeaccKIMn0JBX2zN1C3YAjBf20RzRI=
+  "],
+ CellLabel->"In[71]:=",ExpressionUUID->"ae8af63b-ff71-834c-970e-4ec0473a0e4d"],
+
+Cell[BoxData[
+ RowBox[{"APIFunction", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\<\"periods\"\>", "\[Rule]", 
+      RowBox[{
+       RowBox[{"DelimitedSequence", "[", 
+        RowBox[{"\<\"String\"\>", ",", "\<\";\"\>"}], "]"}], "\[Rule]", 
+       RowBox[{"{", "}"}]}]}], ",", 
+     RowBox[{"\<\"historicalCountries\"\>", "\[Rule]", 
+      RowBox[{
+       RowBox[{"DelimitedSequence", "[", 
+        RowBox[{"\<\"String\"\>", ",", "\<\";\"\>"}], "]"}], "\[Rule]", 
+       RowBox[{"{", "}"}]}]}], ",", 
+     RowBox[{"\<\"militaryConflicts\"\>", "\[Rule]", 
+      RowBox[{
+       RowBox[{"DelimitedSequence", "[", 
+        RowBox[{"\<\"String\"\>", ",", "\<\";\"\>"}], "]"}], "\[Rule]", 
+       RowBox[{"{", "}"}]}]}], ",", 
+     RowBox[{"\<\"persons\"\>", "\[Rule]", 
+      RowBox[{
+       RowBox[{"DelimitedSequence", "[", 
+        RowBox[{"\<\"String\"\>", ",", "\<\";\"\>"}], "]"}], "\[Rule]", 
+       RowBox[{"{", "}"}]}]}]}], "}"}], ",", 
+   RowBox[{
+    RowBox[{"TimeConstrained", "[", 
+     RowBox[{
+      RowBox[{"Module", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+         "periods", ",", "incorrectPeriods", ",", "periodsForTimeline", ",", 
+          "historicalCountries", ",", "incorrectHistoricalCountries", ",", 
+          "historicalCountriesForTimeline", ",", "militaryConflicts", ",", 
+          "incorrectMilitaryConflicts", ",", "militaryConflictsForTimeline", 
+          ",", "persons", ",", "incorrectPersons", ",", "personsForTimeline", 
+          ",", "imageURL"}], "}"}], ",", 
+        RowBox[{
+         RowBox[{"periods", "=", 
+          RowBox[{"AssociationMap", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"Interpreter", "[", "\<\"HistoricalPeriod\"\>", "]"}], 
+              "[", "#1", "]"}], "&"}], ",", "#periods"}], "]"}]}], ";", 
+         RowBox[{"incorrectPeriods", "=", 
+          RowBox[{"Keys", "[", 
+           RowBox[{"Select", "[", 
+            RowBox[{"periods", ",", "FailureQ"}], "]"}], "]"}]}], ";", 
+         RowBox[{"periodsForTimeline", "=", 
+          RowBox[{"Select", "[", 
+           RowBox[{"periods", ",", 
+            RowBox[{
+             RowBox[{"!", 
+              RowBox[{"FailureQ", "[", "#1", "]"}]}], "&"}]}], "]"}]}], ";", 
+         RowBox[{"historicalCountries", "=", 
+          RowBox[{"AssociationMap", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"toEntityHistoricalCountryString", "[", "#1", "]"}], 
+             "&"}], ",", "#historicalCountries"}], "]"}]}], ";", 
+         RowBox[{"incorrectHistoricalCountries", "=", 
+          RowBox[{"Keys", "[", 
+           RowBox[{"Select", "[", 
+            RowBox[{"historicalCountries", ",", 
+             RowBox[{
+              RowBox[{"MissingQ", "[", 
+               RowBox[{"EntityValue", "[", 
+                RowBox[{"#1", ",", "\<\"Name\"\>"}], "]"}], "]"}], "&"}]}], 
+            "]"}], "]"}]}], ";", 
+         RowBox[{"historicalCountriesForTimeline", "=", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             TemplateBox[{
+               RowBox[{"DateInterval", "[", 
+                 RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"EntityValue", "[", 
+                    RowBox[{"#1", ",", "\"StartDate\""}], "]"}], ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"MissingQ", "[", 
+                    RowBox[{"EntityValue", "[", 
+                    RowBox[{"#1", ",", "\"EndDate\""}], "]"}], "]"}], ",", 
+                    "Now", ",", 
+                    RowBox[{"EntityValue", "[", 
+                    RowBox[{"#1", ",", "\"EndDate\""}], "]"}]}], "]"}]}], 
+                   "}"}], "]"}], 
+               RowBox[{"EntityValue", "[", 
+                 RowBox[{"#1", ",", "\"Name\""}], "]"}]},
+              "Labeled",
+              DisplayFunction->(GridBox[{{
+                  TagBox[
+                   ItemBox[
+                    PaneBox[
+                    TagBox[#, "SkipImageSizeLevel"], 
+                    Alignment -> {Center, Baseline}, BaselinePosition -> 
+                    Baseline], DefaultBaseStyle -> "Labeled"], 
+                   "SkipImageSizeLevel"]}, {
+                  ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}}, 
+                GridBoxAlignment -> {
+                 "Columns" -> {{Center}}, "Rows" -> {{Center}}}, AutoDelete -> 
+                False, GridBoxItemSize -> {
+                 "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                BaselinePosition -> {1, 1}]& ),
+              InterpretationFunction->(RowBox[{"Labeled", "[", 
+                 RowBox[{#, ",", #2, ",", 
+                   RowBox[{"{", "}"}]}], "]"}]& )], "&"}], ")"}], "/@", 
+           RowBox[{"Select", "[", 
+            RowBox[{"historicalCountries", ",", 
+             RowBox[{
+              RowBox[{"!", 
+               RowBox[{"MissingQ", "[", 
+                RowBox[{"EntityValue", "[", 
+                 RowBox[{"#1", ",", "\<\"Name\"\>"}], "]"}], "]"}]}], "&"}]}],
+             "]"}]}]}], ";", 
+         RowBox[{"militaryConflicts", "=", 
+          RowBox[{"AssociationMap", "[", 
+           RowBox[{
+           "toEntityMilitaryConflictString", ",", "#militaryConflicts"}], 
+           "]"}]}], ";", 
+         RowBox[{"incorrectMilitaryConflicts", "=", 
+          RowBox[{"Keys", "[", 
+           RowBox[{"Select", "[", 
+            RowBox[{"militaryConflicts", ",", "MissingQ"}], "]"}], "]"}]}], 
+         ";", 
+         RowBox[{"militaryConflictsForTimeline", "=", 
+          RowBox[{"DeleteMissing", "[", "militaryConflicts", "]"}]}], ";", 
+         RowBox[{"persons", "=", 
+          RowBox[{"AssociationMap", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"Interpreter", "[", "\<\"Person\"\>", "]"}], "[", "#1", 
+              "]"}], "&"}], ",", "#persons"}], "]"}]}], ";", 
+         RowBox[{"incorrectPersons", "=", 
+          RowBox[{"Keys", "[", 
+           RowBox[{"Select", "[", 
+            RowBox[{"persons", ",", "FailureQ"}], "]"}], "]"}]}], ";", 
+         RowBox[{"personsForTimeline", "=", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             TemplateBox[{
+               RowBox[{"DateInterval", "[", 
+                 RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"EntityValue", "[", 
+                    RowBox[{"#1", ",", "\"BirthDate\""}], "]"}], ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"MissingQ", "[", 
+                    RowBox[{"EntityValue", "[", 
+                    RowBox[{"#1", ",", "\"DeathDate\""}], "]"}], "]"}], ",", 
+                    "Now", ",", 
+                    RowBox[{"EntityValue", "[", 
+                    RowBox[{"#1", ",", "\"DeathDate\""}], "]"}]}], "]"}]}], 
+                   "}"}], "]"}], 
+               RowBox[{"EntityValue", "[", 
+                 RowBox[{"#1", ",", "\"Name\""}], "]"}]},
+              "Labeled",
+              DisplayFunction->(GridBox[{{
+                  TagBox[
+                   ItemBox[
+                    PaneBox[
+                    TagBox[#, "SkipImageSizeLevel"], 
+                    Alignment -> {Center, Baseline}, BaselinePosition -> 
+                    Baseline], DefaultBaseStyle -> "Labeled"], 
+                   "SkipImageSizeLevel"]}, {
+                  ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}}, 
+                GridBoxAlignment -> {
+                 "Columns" -> {{Center}}, "Rows" -> {{Center}}}, AutoDelete -> 
+                False, GridBoxItemSize -> {
+                 "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                BaselinePosition -> {1, 1}]& ),
+              InterpretationFunction->(RowBox[{"Labeled", "[", 
+                 RowBox[{#, ",", #2, ",", 
+                   RowBox[{"{", "}"}]}], "]"}]& )], "&"}], ")"}], "/@", 
+           RowBox[{"Select", "[", 
+            RowBox[{"persons", ",", 
+             RowBox[{
+              RowBox[{"!", 
+               RowBox[{"FailureQ", "[", "#1", "]"}]}], "&"}]}], "]"}]}]}], 
+         ";", 
+         RowBox[{"imageURL", "=", 
+          RowBox[{
+           RowBox[{"CloudExport", "[", 
+            RowBox[{
+             RowBox[{"Rasterize", "[", 
+              RowBox[{
+               RowBox[{"TimelinePlot", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                  "periods", ",", "historicalCountriesForTimeline", ",", 
+                   "militaryConflicts", ",", "personsForTimeline"}], "}"}], 
+                 ",", 
+                 RowBox[{"PlotTheme", "\[Rule]", "\<\"Web\"\>"}], ",", 
+                 RowBox[{"PlotLayout", "\[Rule]", "\<\"Stacked\"\>"}], ",", 
+                 RowBox[{"Filling", "\[Rule]", "Axis"}], ",", 
+                 RowBox[{"PlotLegends", "\[Rule]", 
+                  RowBox[{"{", 
+                   
+                   RowBox[{"\<\"Periods\"\>", 
+                    ",", "\<\"Historical Countries\"\>", 
+                    ",", "\<\"Military Conflicts\"\>", 
+                    ",", "\<\"Persons\"\>"}], "}"}]}], ",", 
+                 RowBox[{"ImageSize", "\[Rule]", "Large"}]}], "]"}], ",", 
+               RowBox[{"ImageResolution", "\[Rule]", "300"}]}], "]"}], 
+             ",", "\<\"PNG\"\>", ",", 
+             RowBox[{"Permissions", "\[Rule]", "\<\"Public\"\>"}]}], "]"}], 
+           "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}], ";", 
+         RowBox[{"ExportString", "[", 
+          RowBox[{
+           RowBox[{"Association", "[", 
+            RowBox[{
+             RowBox[{"\<\"image\"\>", "\[Rule]", "imageURL"}], ",", 
+             RowBox[{"\<\"notesForAssistant\"\>", "\[Rule]", 
+              RowBox[{"Association", "[", 
+               RowBox[{
+                
+                RowBox[{"\<\"incorrectPeriods\"\>", "\[Rule]", 
+                 "incorrectPeriods"}], ",", 
+                
+                RowBox[{"\<\"incorrectHistoricalCountries\"\>", "\[Rule]", 
+                 "incorrectHistoricalCountries"}], ",", 
+                
+                RowBox[{"\<\"incorrectMilitaryConflicts\"\>", "\[Rule]", 
+                 "incorrectMilitaryConflicts"}], ",", 
+                
+                RowBox[{"\<\"incorrectPersons\"\>", "\[Rule]", 
+                 "incorrectPersons"}]}], "]"}]}]}], "]"}], 
+           ",", "\<\"RawJSON\"\>"}], "]"}]}]}], "]"}], ",", "28", ",", 
+      RowBox[{"Failure", "[", 
+       RowBox[{"\<\"TimeConstrained\"\>", ",", 
+        RowBox[{"Association", "[", 
+         RowBox[{"\<\"MessageTemplate\"\>", 
+          "\[Rule]", "\<\"Request timed out\"\>"}], "]"}]}], "]"}]}], "]"}], 
+    "&"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"String\"\>", ",", "\<\"JSON\"\>", ",", "\<\"JSON\"\>"}], 
+    "}"}]}], "]"}]], "Output",
+ CellChangeTimes->{{3.9306071324920273`*^9, 3.930607157202938*^9}},
+ CellLabel->"Out[71]=",ExpressionUUID->"981535b5-c8b2-e941-ae98-b0fc5f8e5644"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"combinedTimeline", "[", 
+  RowBox[{"<|", 
+   RowBox[{
+    RowBox[{
+    "\"\<historicalCountries\>\"", " ", "->", " ", 
+     "\"\<GR; Roman Empire; Greece\>\""}], ",", " ", 
+    RowBox[{"\"\<periods\>\"", "->", "\"\<Space Age;gr\>\""}], ",", " ", 
+    RowBox[{
+    "\"\<militaryConflicts\>\"", "->", "\"\<faszom;Battle of Waterloo\>\""}], 
+    ",", " ", 
+    RowBox[{"\"\<persons\>\"", " ", "->", " ", "\"\<Lenin; Ki a fasz\>\""}]}],
+    "|>"}], "]"}]], "Input",
+ CellChangeTimes->{{3.9305988134575768`*^9, 3.9305988344846706`*^9}, {
+  3.9306010409184704`*^9, 3.9306010513802795`*^9}, {3.9306014129182777`*^9, 
+  3.930601426515871*^9}, {3.930601648398037*^9, 3.9306016594688663`*^9}, {
+  3.9306021229036865`*^9, 3.93060215770014*^9}, {3.9306067846698055`*^9, 
+  3.9306068025293503`*^9}},
+ CellLabel->"In[72]:=",ExpressionUUID->"4a3b0a6d-a00f-f347-835f-a2755fecb91d"],
+
+Cell[BoxData["\<\"{\\n\\t\\\"image\\\":\\\"https:\\\\/\\\\/www.wolframcloud.\
+com\\\\/obj\\\\/6fe56686-6430-449a-a625-51bb08e2a2ac\\\",\\n\\t\\\"\
+notesForAssistant\\\":{\\n\\t\\t\\\"incorrectPeriods\\\":[\\n\\t\\t\\t\\\"gr\\\
+\"\\n\\t\\t],\\n\\t\\t\\\"incorrectHistoricalCountries\\\":[\\n\\t\\t\\t\\\"\
+GR\\\"\\n\\t\\t],\\n\\t\\t\\\"incorrectMilitaryConflicts\\\":[\\n\\t\\t\\t\\\"\
+faszom\\\"\\n\\t\\t],\\n\\t\\t\\\"incorrectPersons\\\":[\\n\\t\\t\\t\\\"Ki a \
+fasz\\\"\\n\\t\\t]\\n\\t}\\n}\"\>"], "Output",
+ CellChangeTimes->{{3.930601122931095*^9, 3.930601148402115*^9}, 
+   3.9306012072858047`*^9, 3.9306014309399776`*^9, 3.9306014927220573`*^9, 
+   3.9306016405260887`*^9, 3.930601674935129*^9, 3.9306021137479515`*^9, 
+   3.930602165492697*^9, 3.930602227991823*^9, 3.930602291115843*^9, 
+   3.930602518235388*^9, 3.9306026232520065`*^9, 3.9306026555278454`*^9, 
+   3.930602753370764*^9, {3.9306029757294197`*^9, 3.930602997595495*^9}, 
+   3.930606418809725*^9, {3.930606793923176*^9, 3.930606806611803*^9}, {
+   3.930607143108101*^9, 3.930607167336748*^9}},
+ CellLabel->"Out[72]=",ExpressionUUID->"bc09a64a-f5ab-b34f-850f-c00f7b750899"]
+}, Open  ]]
+},
+WindowSize->{1920, 1018},
+WindowMargins->{{-5.5, Automatic}, {Automatic, -5.5}},
+FrontEndVersion->"14.0 for Microsoft Windows (64-bit) (December 16, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"a645e583-496d-c843-a994-3f4b2eee8bbf"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[583, 22, 11422, 243, 987, "Input",ExpressionUUID->"ae8af63b-ff71-834c-970e-4ec0473a0e4d"],
+Cell[12008, 267, 10957, 245, 654, "Output",ExpressionUUID->"981535b5-c8b2-e941-ae98-b0fc5f8e5644"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23002, 517, 889, 18, 35, "Input",ExpressionUUID->"4a3b0a6d-a00f-f347-835f-a2755fecb91d"],
+Cell[23894, 537, 1145, 15, 440, "Output",ExpressionUUID->"bc09a64a-f5ab-b34f-850f-c00f7b750899"]
+}, Open  ]]
+}
+]
+*)
+
